@@ -10,24 +10,26 @@
     <body>
         <div class="etiquetas">
             @foreach ($etiquetas as $etiqueta)
-                <div id="etiqueta">
-                        <span>
-                            CNPJ:{{ $etiqueta['cnpj'] }}
-                        </span>
-                        <span style="height:60%;">
-                            @php
-                            echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($etiqueta['codigoBarras'], 'EAN13',3,33) . '" alt="barcode"   />';
-                            @endphp
-                            {{ $etiqueta['codigoBarras'] }}
-                        </span>
-                        <span>
-                            @if (array_key_exists('dataValidade', $etiqueta))
-                                {{ $etiqueta['dataValidade'] }}
-                            @else
-                                Validade Indeterminda
-                            @endif
-                        </span>
-                </div>
+                @for ($i = 0; $i < $etiqueta['quantidade']; $i++)
+                    <div id="etiqueta">
+                            <span>
+                                CNPJ:{{ $etiqueta['cnpj'] }}
+                            </span>
+                            <span style="height:60%;">
+                                @php
+                                echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($etiqueta['codigoBarras'], 'EAN13',3,33) . '" alt="barcode"   />';
+                                @endphp
+                                {{ $etiqueta['codigoBarras'] }}
+                            </span>
+                            <span>
+                                @if (array_key_exists('dataValidade', $etiqueta))
+                                    {{ $etiqueta['dataValidade'] }}
+                                @else
+                                    Validade Indeterminda
+                                @endif
+                            </span>
+                    </div>
+                @endfor
             @endforeach
         </div>
     </body>
